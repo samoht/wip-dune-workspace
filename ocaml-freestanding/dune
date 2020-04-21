@@ -65,7 +65,16 @@
  (install
   (section lib)
   (package ocaml-freestanding)
-  (files libopenlibm.a))
+  (files
+    libopenlibm.a
+    include/openlibm.h
+    include/openlibm_complex.h
+    include/openlibm_fenv.h
+    include/openlibm_fenv_amd64.h
+    include/openlibm_fenv_arm.h
+    include/openlibm_fenv_i387.h
+    include/openlibm_fenv_powerpc.h
+    include/openlibm_math.h))
  (subdir
   src
   (install

@@ -5,15 +5,15 @@ TARGET=$1
 shift
 CC=$1
 shift
-CFLAGS=$@
+CFLAGS="$@"
 
 cd src/
 
 ac_cv_func_obstack_vprintf=no \
 ac_cv_func_localeconv=no \
 ./configure \
-    --host=$TARGET --enable-fat --disable-shared --with-pic \
-    CC=$CC "CPPFLAGS=$CFLAGS"
+    --host=$TARGET --enable-fat --disable-shared --with-pic=no \
+    CC=$CC "CPPFLAGS=$CFLAGS -fno-stack-protector"
 
 make SUBDIRS="mpn mpz mpq mpf" \
     PRINTF_OBJECTS= SCANF_OBJECTS= \
