@@ -1,0 +1,9 @@
+(executable
+  (name test)
+  (libraries gmp)
+  (foreign_stubs (language c) (names test)))
+
+(rule
+  (alias runtest)
+  (package gmp)
+  (action (run ./test.exe)))

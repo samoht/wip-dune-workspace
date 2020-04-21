@@ -1,0 +1,8 @@
+(executable
+ (name discover)
+ (libraries str dune.configurator))
+
+(rule
+ (targets cflags asflags arch)
+ (deps discover.exe)
+ (action (run ./discover.exe -gmp.h %{lib:gmp:gmp.h})))

@@ -1,0 +1,9 @@
+(library
+ (public_name gmp)
+ (install_c_headers gmp)
+ (foreign_archives gmp))
+
+(rule
+ (deps (source_tree src))
+ (targets gmp.h libgmp.a)
+ (action (run ./build.sh x86_64-unknown-none %{cc})))
