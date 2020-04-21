@@ -7,8 +7,6 @@ CC=$1
 shift
 CFLAGS="$@"
 
-cd src/
-
 ac_cv_func_obstack_vprintf=no \
 ac_cv_func_localeconv=no \
 ./configure \
@@ -19,5 +17,4 @@ make SUBDIRS="mpn mpz mpq mpf" \
     PRINTF_OBJECTS= SCANF_OBJECTS= \
     CFLAGS+=-Werror=implicit-function-declaration
 
-cp .libs/libgmp.a ..
-cp gmp.h ..
+cp .libs/libgmp.a .
