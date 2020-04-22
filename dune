@@ -1,5 +1,7 @@
 (rule
   (target cflags-hvt)
+; FIXME: create a dependency loop
+; (deps (package solo5-hvt) (package ocaml-freestanding))
   (deps %{lib:solo5-hvt:cflags} %{lib:ocaml-freestanding:cflags})
   (action (with-stdout-to %{target} (progn
   (echo "(")
