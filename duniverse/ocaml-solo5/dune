@@ -1,0 +1,19 @@
+(data_only_dirs src)
+
+(executable
+ (name build))
+
+(rule
+ (deps build.ml)
+ (action
+  (with-stdout-to
+   dune.gen
+   (run ./build.exe dune))))
+
+(rule
+ (alias runtest)
+ (package solo5)
+ (action
+  (diff dune.inc dune.gen)))
+
+(include dune.inc)

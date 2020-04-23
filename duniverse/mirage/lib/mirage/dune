@@ -1,0 +1,3 @@
+(library
+ (public_name mirage)
+ (libraries stdlib-shims ipaddr logs astring functoria mirage-runtime bos))

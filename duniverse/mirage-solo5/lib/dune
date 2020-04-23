@@ -1,0 +1,31 @@
+(include_subdirs unqualified)
+
+(library
+ (name oS)
+ (public_name mirage-solo5)
+ (private_modules lifecycle main mM time solo5)
+ (libraries mirage-runtime bheap lwt cstruct metrics solo5 ocaml-freestanding)
+ (foreign_archives mirage-solo5_bindings))
+
+(rule
+ (copy %{lib:solo5:cflags} solo5-cflags))
+
+; FIXME: ocaml-freestanding CFLAGS should (:include %{lib:...}) but
+; this is not supported un dune yet
+(rule
+ (copy %{lib:ocaml-freestanding:cflags} freestanding-cflags))
+
+(foreign_library
+ (archive_name mirage-solo5_bindings)
+ (language c)
+ (names alloc_pages_stubs clock_stubs mm_stubs atomic_stubs cstruct_stubs
+   solo5_block_stubs barrier_stubs main solo5_console_stubs checksum_stubs
+   solo5_net_stubs)
+ (flags
+  (:include solo5-cflags)
+  (:include freestanding-cflags)
+  -O2
+  -std=c99
+  -Wall
+  -Werror
+  :standard))

@@ -1,0 +1,2 @@
+Deprecated: use `dune buid' directly
+* Run_cmd 'dune build ./' (ok)

@@ -1,0 +1,2 @@
+$(dune build ./config.exe)
+$(dune exec -- ./config.exe help configure --dry-run)
