@@ -43,16 +43,21 @@
 
 (rule (copy %{lib:ocaml-freestanding:ldflags} freestanding-ldflags))
 
+(rule (copy %{lib:mirage-solo5:libmirage-solo5_bindings.a} libmirage-solo5_bindings.a))
+
 (rule
   (target https.hvt)
   (enabled_if (= %{context_name} "mirage-hvt"))
   (mode (promote (until-clean)))
-  (deps main.exe.o solo5-hvt-ldflags freestanding-ldflags)
+  (deps main.exe.o libmirage-solo5_bindings.a solo5-hvt-ldflags freestanding-ldflags)
   (action
     (bash
-      "ld -verbose \
-         $(cat $(realpath solo5-hvt-ldflags)) main.exe.o -o %{target} \
-         $(cat $(realpath freestanding-ldflags))")))
+      "ld -verbose -nostdlib \
+         -L/home/samoht/git/wip-dune-workspace/_build/install/mirage-hvt/lib/ocaml-freestanding \
+         -I/home/samoht/git/wip-dune-workspace/_build/install/mirage-hvt/lib/ocaml-freestanding \
+         main.exe.o \
+         $(cat $(realpath solo5-hvt-ldflags)) -o %{target} \
+         $(cat $(realpath freestanding-ldflags)) -lasmrun -lnolibc")))
 
 (rule (copy %{lib:solo5-hvt:cflags} solo5-hvt-cflags))
 
