@@ -24,7 +24,81 @@
    stdint.h
    stdint-gcc.h
    stdalign.h
-   stdnoreturn.h)
+   stdnoreturn.h
+   x86intrin.h
+   clzerointrin.h
+   cpuid.h
+   adxintrin.h
+   ammintrin.h
+   avx2intrin.h
+   avx5124fmapsintrin.h
+   avx5124vnniwintrin.h
+   avx512bitalgintrin.h
+   avx512bwintrin.h
+   avx512cdintrin.h
+   avx512dqintrin.h
+   avx512erintrin.h
+   avx512fintrin.h
+   avx512ifmaintrin.h
+   avx512ifmavlintrin.h
+   avx512pfintrin.h
+   avx512vbmi2intrin.h
+   avx512vbmi2vlintrin.h
+   avx512vbmiintrin.h
+   avx512vbmivlintrin.h
+   avx512vlbwintrin.h
+   avx512vldqintrin.h
+   avx512vlintrin.h
+   avx512vnniintrin.h
+   avx512vnnivlintrin.h
+   avx512vpopcntdqintrin.h
+   avx512vpopcntdqvlintrin.h
+   avxintrin.h
+   bmi2intrin.h
+   bmiintrin.h
+   cetintrin.h
+   cldemoteintrin.h
+   clflushoptintrin.h
+   clwbintrin.h
+   emmintrin.h
+   f16cintrin.h
+   fma4intrin.h
+   fmaintrin.h
+   fxsrintrin.h
+   gfniintrin.h
+   ia32intrin.h
+   immintrin.h
+   lwpintrin.h
+   lzcntintrin.h
+   mm3dnow.h
+   mm_malloc.h
+   mmintrin.h
+   movdirintrin.h
+   mwaitxintrin.h
+   pconfigintrin.h
+   pkuintrin.h
+   pmmintrin.h
+   popcntintrin.h
+   prfchwintrin.h
+   rdseedintrin.h
+   rtmintrin.h
+   sgxintrin.h
+   shaintrin.h
+   smmintrin.h
+   tbmintrin.h
+   tmmintrin.h
+   vaesintrin.h
+   vpclmulqdqintrin.h
+   waitpkgintrin.h
+   wbnoinvdintrin.h
+   wmmintrin.h
+   xmmintrin.h
+   xopintrin.h
+   xsavecintrin.h
+   xsaveintrin.h
+   xsaveoptintrin.h
+   xsavesintrin.h
+   xtestintrin.h)
  (deps build.exe (source_tree src))
  (package solo5)
  (action (bash "./build.exe solo5 $(realpath $(dirname %{lib:solo5:dune-package}))")))
@@ -46,7 +120,81 @@
    (stdint.h as crt/stdint.h)
    (stdint-gcc.h as crt/stdint-gcc.h)
    (stdalign.h as crt/stdalign.h)
-   (stdnoreturn.h as crt/stdnoreturn.h))
+   (stdnoreturn.h as crt/stdnoreturn.h)
+   (x86intrin.h as crt/x86intrin.h)
+   (clzerointrin.h as crt/clzerointrin.h)
+   (cpuid.h as crt/cpuid.h)
+   (adxintrin.h as crt/adxintrin.h)
+   (ammintrin.h as crt/ammintrin.h)
+   (avx2intrin.h as crt/avx2intrin.h)
+   (avx5124fmapsintrin.h as crt/avx5124fmapsintrin.h)
+   (avx5124vnniwintrin.h as crt/avx5124vnniwintrin.h)
+   (avx512bitalgintrin.h as crt/avx512bitalgintrin.h)
+   (avx512bwintrin.h as crt/avx512bwintrin.h)
+   (avx512cdintrin.h as crt/avx512cdintrin.h)
+   (avx512dqintrin.h as crt/avx512dqintrin.h)
+   (avx512erintrin.h as crt/avx512erintrin.h)
+   (avx512fintrin.h as crt/avx512fintrin.h)
+   (avx512ifmaintrin.h as crt/avx512ifmaintrin.h)
+   (avx512ifmavlintrin.h as crt/avx512ifmavlintrin.h)
+   (avx512pfintrin.h as crt/avx512pfintrin.h)
+   (avx512vbmi2intrin.h as crt/avx512vbmi2intrin.h)
+   (avx512vbmi2vlintrin.h as crt/avx512vbmi2vlintrin.h)
+   (avx512vbmiintrin.h as crt/avx512vbmiintrin.h)
+   (avx512vbmivlintrin.h as crt/avx512vbmivlintrin.h)
+   (avx512vlbwintrin.h as crt/avx512vlbwintrin.h)
+   (avx512vldqintrin.h as crt/avx512vldqintrin.h)
+   (avx512vlintrin.h as crt/avx512vlintrin.h)
+   (avx512vnniintrin.h as crt/avx512vnniintrin.h)
+   (avx512vnnivlintrin.h as crt/avx512vnnivlintrin.h)
+   (avx512vpopcntdqintrin.h as crt/avx512vpopcntdqintrin.h)
+   (avx512vpopcntdqvlintrin.h as crt/avx512vpopcntdqvlintrin.h)
+   (avxintrin.h as crt/avxintrin.h)
+   (bmi2intrin.h as crt/bmi2intrin.h)
+   (bmiintrin.h as crt/bmiintrin.h)
+   (cetintrin.h as crt/cetintrin.h)
+   (cldemoteintrin.h as crt/cldemoteintrin.h)
+   (clflushoptintrin.h as crt/clflushoptintrin.h)
+   (clwbintrin.h as crt/clwbintrin.h)
+   (emmintrin.h as crt/emmintrin.h)
+   (f16cintrin.h as crt/f16cintrin.h)
+   (fma4intrin.h as crt/fma4intrin.h)
+   (fmaintrin.h as crt/fmaintrin.h)
+   (fxsrintrin.h as crt/fxsrintrin.h)
+   (gfniintrin.h as crt/gfniintrin.h)
+   (ia32intrin.h as crt/ia32intrin.h)
+   (immintrin.h as crt/immintrin.h)
+   (lwpintrin.h as crt/lwpintrin.h)
+   (lzcntintrin.h as crt/lzcntintrin.h)
+   (mm3dnow.h as crt/mm3dnow.h)
+   (mm_malloc.h as crt/mm_malloc.h)
+   (mmintrin.h as crt/mmintrin.h)
+   (movdirintrin.h as crt/movdirintrin.h)
+   (mwaitxintrin.h as crt/mwaitxintrin.h)
+   (pconfigintrin.h as crt/pconfigintrin.h)
+   (pkuintrin.h as crt/pkuintrin.h)
+   (pmmintrin.h as crt/pmmintrin.h)
+   (popcntintrin.h as crt/popcntintrin.h)
+   (prfchwintrin.h as crt/prfchwintrin.h)
+   (rdseedintrin.h as crt/rdseedintrin.h)
+   (rtmintrin.h as crt/rtmintrin.h)
+   (sgxintrin.h as crt/sgxintrin.h)
+   (shaintrin.h as crt/shaintrin.h)
+   (smmintrin.h as crt/smmintrin.h)
+   (tbmintrin.h as crt/tbmintrin.h)
+   (tmmintrin.h as crt/tmmintrin.h)
+   (vaesintrin.h as crt/vaesintrin.h)
+   (vpclmulqdqintrin.h as crt/vpclmulqdqintrin.h)
+   (waitpkgintrin.h as crt/waitpkgintrin.h)
+   (wbnoinvdintrin.h as crt/wbnoinvdintrin.h)
+   (wmmintrin.h as crt/wmmintrin.h)
+   (xmmintrin.h as crt/xmmintrin.h)
+   (xopintrin.h as crt/xopintrin.h)
+   (xsavecintrin.h as crt/xsavecintrin.h)
+   (xsaveintrin.h as crt/xsaveintrin.h)
+   (xsaveoptintrin.h as crt/xsaveoptintrin.h)
+   (xsavesintrin.h as crt/xsavesintrin.h)
+   (xtestintrin.h as crt/xtestintrin.h))
   (section lib)
   (package solo5))
 
