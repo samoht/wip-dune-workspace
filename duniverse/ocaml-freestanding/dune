@@ -8,8 +8,6 @@
  (libraries solo5)
  (modules))
 
-(rule (copy %{lib:solo5:cflags} solo5-cflags))
-
 ; ${cc} += $LOCAL_CFLAGS
 
 (rule
@@ -22,7 +20,7 @@
    ; FIXME: do not use realpath
    ; FIXME: %{lib:<self>} doesn't point to the install path
    (bash
-     "echo \"(-ffreestanding -I$(realpath $(dirname %{lib:ocaml-freestanding:dune-package})))\""))))
+     "echo \"(-I$(realpath $(dirname %{lib:ocaml-freestanding:dune-package})))\""))))
 
 (rule
  (targets install-ldflags)
@@ -57,12 +55,11 @@
    (with-stdout-to
     %{targets}
     ; FIXME: do not use realpath
-    (bash "echo \"(-isystem $(realpath ../nolibc/include))\""))))
+    (bash "echo \"(-nostdlib -isystem $(realpath ../nolibc/include))\""))))
  (env
   (_
    (c_flags
-    (:standard
-     (:include ../solo5-cflags)
+     (:standard
      (:include cflags)))))
  (rule
   (deps
@@ -106,13 +103,12 @@
     %{targets}
     ; FIXME: do not use realpath
     (bash
-      "echo \"(-isystem $(realpath ../nolibc/include) -isystem $(realpath ../openlibm/src) -isystem $(realpath ../openlibm/include))\""))))
+      "echo \"(-nostdlib -isystem $(realpath ../nolibc/include) -isystem $(realpath ../openlibm/src) -isystem $(realpath ../openlibm/include))\""))))
  (env
   (_
    (c_flags
     :standard
-    (:include cflags)
-    (:include ../solo5-cflags))))
+    (:include cflags))))
  (rule
   (deps
    build-nolibc.sh
@@ -185,12 +181,11 @@
     %{targets}
     ; FIXME: do not use realpath
     (bash
-      "echo \"(-isystem $(realpath ../nolibc/include) -I $(realpath ../openlibm/src) -I $(realpath ../openlibm/include))\""))))
+      "echo \"(-nostdlib -isystem $(realpath ../nolibc/include) -I$(realpath ../openlibm/include) -I$(realpath ../openlibm/src))\""))))
  (env
   (_
    (c_flags
     :standard
-    (:include ../solo5-cflags)
     (:include cflags))))
  (rule
   (deps
@@ -202,9 +197,10 @@
    (glob_files runtime/caml/**)
    (glob_files tools/**)
    (glob_files build-aux/**)
-   (package solo5)
-   (source_tree ../nolibc)
-   (source_tree ../openlibm))
+   (glob_files ../nolibc/include/**)
+   (glob_files ../nolibc/include/sys/**)
+   (glob_files ../openlibm/include/**)
+   (glob_files ../openlibm/src/**))
   ; s.h and m.h are listed here as dune doesn't like targets in subdir ocaml/dune#3374
   (targets Makefile.config Makefile.common s.h m.h version.h domain.h
     domain_state.h domain_state.tbl)
@@ -218,6 +214,11 @@
     Makefile
     .depend
     (glob_files caml/**)
+    (glob_files ../nolibc/include/**)
+    (glob_files ../nolibc/include/sys/**)
+    (glob_files ../openlibm/include/**)
+    (glob_files ../openlibm/src/**)
+    (package solo5)
     ; normal deps
     ../VERSION
     ../Makefile.config

@@ -4,9 +4,9 @@ CC_=$1
 shift
 CFLAGS=$@
 
-export CC="${CC_} ${CFLAGS} -nostdlib"
+export CC="cc ${CFLAGS} -nostdlib"
 export AS="as"
-export ASPP="${CC_} ${CFLAGS} -c"
+export ASPP="cc ${CFLAGS} -c"
 export LD="ld"
 export CPPFLAGS="${CFLAGS}"
 

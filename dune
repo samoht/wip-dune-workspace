@@ -72,10 +72,10 @@
  (mode
   (promote (until-clean)))
  (deps main.exe.o libmirage-solo5_bindings.a solo5-hvt-ldflags
-   freestanding-ldflags std_exit.o)
+   freestanding-ldflags)
  (action
   (bash
-    "ld -verbose main.exe.o std_exit.o $(cat $(realpath solo5-hvt-ldflags)) -o %{target} $(cat $(realpath freestanding-ldflags))")))
+    "ld -verbose main.exe.o $(cat $(realpath solo5-hvt-ldflags)) -o %{target} $(cat $(realpath freestanding-ldflags))")))
 
 (rule
  (copy %{lib:solo5-hvt:cflags} solo5-hvt-cflags))
