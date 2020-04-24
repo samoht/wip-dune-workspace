@@ -41,7 +41,8 @@
  (link_flags -g -w +A-4-41-42-44 -bin-annot -strict-sequence -principal
    -safe-string)
  (modules
-  (:standard \ config manifest))
+  (:standard \ config))
+ (flags :standard -without-runtime)
  (foreign_stubs
   (language c)
   (names manifest))
@@ -75,7 +76,7 @@
    freestanding-ldflags)
  (action
   (bash
-    "ld -verbose main.exe.o $(cat $(realpath solo5-hvt-ldflags)) -o %{target} $(cat $(realpath freestanding-ldflags))")))
+    "ld $(cat $(realpath solo5-hvt-ldflags)) main.exe.o -o %{target} $(cat $(realpath freestanding-ldflags))")))
 
 (rule
  (copy %{lib:solo5-hvt:cflags} solo5-hvt-cflags))

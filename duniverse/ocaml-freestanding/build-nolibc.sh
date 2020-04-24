@@ -1,7 +1,7 @@
 #!/bin/sh -eux
 
-CC=$1
+CC_=$1
 shift
 CFLAGS=$@
 
-make CC="${CC}" CFLAGS="${CFLAGS}" SYSDEP_OBJS=sysdeps_solo5.o
+make CC="cc" CFLAGS="${CFLAGS}" SYSDEP_OBJS=sysdeps_solo5.o
