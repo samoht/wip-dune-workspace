@@ -8,22 +8,9 @@
  (libraries solo5)
  (modules))
 
-;; Use a local file (cflags) to store include paths
+(rule (copy %{lib:solo5:cflags} solo5-cflags))
 
 ; ${cc} += $LOCAL_CFLAGS
-
-(rule
- (targets cflags)
- (deps
-  (env_var PWD)
-  (source_tree nolibc)
-  (source_tree openlibm))
- (action
-  (with-stdout-to
-   %{targets}
-   ; FIXME: do not use realpath
-   (bash
-     "echo \"(-isystem $(realpath nolibc/include) -I$(realpath openlibm/include) -I$(realpath openlibm/src))\""))))
 
 (rule
  (targets install-cflags)
@@ -56,21 +43,31 @@
   (install-cflags as cflags)
   (install-ldflags as ldflags)))
 
-(env
- (_
-  (c_flags
-   (:standard
-    -ffreestanding
-    (:include cflags)))))
-
 ;; OPENLIBM
 
 (subdir
  openlibm
  (copy_files ../build-openlibm.sh)
  (rule
+  (targets cflags)
+  (deps
+   (env_var PWD)
+   (source_tree nolibc))
+  (action
+   (with-stdout-to
+    %{targets}
+    ; FIXME: do not use realpath
+    (bash "echo \"(-isystem $(realpath ../nolibc/include))\""))))
+ (env
+  (_
+   (c_flags
+    (:standard
+     (:include ../solo5-cflags)
+     (:include cflags)))))
+ (rule
   (deps
    build-openlibm.sh
+   (package solo5)
    (source_tree .)
    (source_tree ../nolibc))
   (targets libopenlibm.a)
@@ -99,16 +96,28 @@
  (copy_files ../build-nolibc.sh)
  ; FIXME: include %{lib:..} doesn't work
  (rule
-  (copy %{lib:solo5:cflags} solo5-cflags))
+  (targets cflags)
+  (deps
+   (env_var PWD)
+   (source_tree nolibc)
+   (source_tree openlibm))
+  (action
+   (with-stdout-to
+    %{targets}
+    ; FIXME: do not use realpath
+    (bash
+      "echo \"(-isystem $(realpath ../nolibc/include) -isystem $(realpath ../openlibm/src) -isystem $(realpath ../openlibm/include))\""))))
  (env
   (_
    (c_flags
     :standard
-    (:include solo5-cflags))))
+    (:include cflags)
+    (:include ../solo5-cflags))))
  (rule
   (deps
    build-nolibc.sh
    (source_tree .)
+   (package solo5)
    (source_tree ../openlibm))
   (targets libnolibc.a)
   (action
@@ -166,6 +175,24 @@
  ocaml-src
  (copy_files ../configure-ocaml.sh)
  (rule
+  (targets cflags)
+  (deps
+   (env_var PWD)
+   (source_tree nolibc)
+   (source_tree openlibm))
+  (action
+   (with-stdout-to
+    %{targets}
+    ; FIXME: do not use realpath
+    (bash
+      "echo \"(-isystem $(realpath ../nolibc/include) -I $(realpath ../openlibm/src) -I $(realpath ../openlibm/include))\""))))
+ (env
+  (_
+   (c_flags
+    :standard
+    (:include ../solo5-cflags)
+    (:include cflags))))
+ (rule
   (deps
    configure-ocaml.sh
    ; FIXME: source_tree deps doesn't work with copy_files
@@ -175,6 +202,7 @@
    (glob_files runtime/caml/**)
    (glob_files tools/**)
    (glob_files build-aux/**)
+   (package solo5)
    (source_tree ../nolibc)
    (source_tree ../openlibm))
   ; s.h and m.h are listed here as dune doesn't like targets in subdir ocaml/dune#3374

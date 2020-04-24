@@ -5,4 +5,5 @@
 (rule
  (targets cflags asflags arch)
  (deps %{lib:gmp:libgmp.a} discover.exe)
- (action (run ./discover.exe -gmp.h %{lib:gmp:gmp.h})))
+ (action
+  (run ./discover.exe -gmp.h %{lib:gmp:gmp.h})))

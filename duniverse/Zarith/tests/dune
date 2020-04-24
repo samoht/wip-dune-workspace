@@ -1,17 +1,20 @@
 (test
- ( name zq)
-  (modules zq)
-  (libraries zarith))
+ (name zq)
+ (modules zq)
+ (libraries zarith))
+
 ;; TODO compare against output64 result or define expect test
 
 (executable
-  (name pi)
-  (modules pi)
-  (libraries zarith))
+ (name pi)
+ (modules pi)
+ (libraries zarith))
 
 (rule
  (alias runtest)
  (deps pi.exe)
- (action (run ./pi.exe 500)))
+ (action
+  (run ./pi.exe 500)))
 
-(rule (copy pi.output pi.expected))
+(rule
+ (copy pi.output pi.expected))
